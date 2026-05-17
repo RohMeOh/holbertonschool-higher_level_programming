@@ -23,3 +23,8 @@ b must be an integer
 ... except Exception as e:
 ...     print(e)
 a must be an integer
+
+>>> add_integer(float("inf"), 2)
+Traceback (most recent call last):
+...
+OverflowError: cannot convert float infinity to integer
