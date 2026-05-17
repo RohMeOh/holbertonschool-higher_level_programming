@@ -9,20 +9,30 @@ The result is returned as a new matrix.
 def matrix_divided(matrix, div):
     """Divide all elements of a matrix."""
 
-    if (not isinstance(matrix, list) or matrix == [] or
-            not all(isinstance(row, list) for row in matrix) or
-            not all(isinstance(num, (int, float))
-                    for row in matrix for num in row)):
-        raise TypeError("matrix must be a matrix (list of lists) "
-                        "of integers/floats")
+    error_msg = "matrix must be a matrix (list of lists) of integers/floats"
 
-    row_size = len(matrix[0])
+    if not isinstance(matrix, list) or matrix == []:
+        raise TypeError(error_msg)
+
+    row_size = None
 
     for row in matrix:
-        if len(row) != row_size:
+        if not isinstance(row, list) or row == []:
+            raise TypeError(error_msg)
+
+        if row_size is None:
+            row_size = len(row)
+        elif len(row) != row_size:
             raise TypeError("Each row of the matrix must have the same size")
 
+        for num in row:
+            if not isinstance(num, (int, float)) or num != num:
+                raise TypeError(error_msg)
+
     if not isinstance(div, (int, float)):
+        raise TypeError("div must be a number")
+
+    if div != div:
         raise TypeError("div must be a number")
 
     if div == 0:
